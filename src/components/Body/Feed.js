@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './Feed.css'
 
@@ -11,11 +11,50 @@ import CalendarViewDayIcon from '@mui/icons-material/CalendarViewDay'
 import InputOption from './InputOption'
 import Post from './Post'
 
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy
+} from 'firebase/firestore'
+
+import { db } from '../../firebase'
+
 function Feed() {
+  const [input, setInput] = useState('')
   const [posts, setPosts] = useState([])
+
+  // Listens to db, if any changes in db - will re render
+  useEffect(() => {
+    const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'))
+    onSnapshot(q, (snapshot) => {
+      setPosts(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data()
+        }))
+      )
+    })
+  }, [])
 
   const sendPost = (e) => {
     e.preventDefault()
+
+    try {
+      addDoc(collection(db, 'posts'), {
+        name: 'Josh Speed',
+        description: 'this is a text',
+        message: input,
+        photoUrl: '',
+        timestamp: serverTimestamp()
+      })
+    } catch (e) {
+      console.error(e)
+    }
+
+    setInput('')
   }
 
   return (
@@ -24,7 +63,11 @@ function Feed() {
         <div className='feed__input'>
           <CreateIcon />
           <form>
-            <input type='text' />
+            <input
+              type='text'
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
             <button onClick={sendPost} type='submit'>
               Send
             </button>
@@ -43,15 +86,15 @@ function Feed() {
       </div>
 
       {/* Posts */}
-      {posts.map((post) => (
-        <Post />
+      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+        <Post
+          key={id}
+          name={name}
+          description={description}
+          message={message}
+          photoUrl={photoUrl}
+        />
       ))}
-
-      <Post
-        name='Josh Speed'
-        description='This is a test'
-        message='WOW this worked'
-      />
     </div>
   )
 }
