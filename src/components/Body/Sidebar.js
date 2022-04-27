@@ -1,10 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../features/userSlice'
 
 import './Sidebar.css'
 import { Avatar } from '@mui/material'
 import theRock from '../../imgs/therock.webp'
 
 function Sidebar() {
+  const user = useSelector(selectUser)
+
   // (render jsx from functions)
   const recentItem = (topic) => (
     <div className='sidebar__recentItem'>
@@ -20,9 +24,11 @@ function Sidebar() {
           src='https://images.unsplash.com/photo-1648869190057-4a2e50d0395b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80'
           alt=''
         />
-        <Avatar className='sidebar__avatar' src={theRock} />
-        <h2>Josh Speed</h2>
-        <h4>joshuabspeed@hotmail.co.uk</h4>
+        <Avatar className='sidebar__avatar' src={user.photoUrl}>
+          {user.email[0]}
+        </Avatar>
+        <h2>{user.displayName}</h2>
+        <h4>{user.email}</h4>
       </div>
 
       <div className='sidebar__stats'>

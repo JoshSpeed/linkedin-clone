@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../features/userSlice'
 
 import './Feed.css'
 
@@ -23,6 +25,7 @@ import {
 import { db } from '../../firebase'
 
 function Feed() {
+  const user = useSelector(selectUser)
   const [input, setInput] = useState('')
   const [posts, setPosts] = useState([])
 
@@ -44,10 +47,10 @@ function Feed() {
 
     try {
       addDoc(collection(db, 'posts'), {
-        name: 'Josh Speed',
-        description: 'this is a text',
+        name: user.displayName,
+        description: user.email,
         message: input,
-        photoUrl: '',
+        photoUrl: user.photoUrl || '',
         timestamp: serverTimestamp()
       })
     } catch (e) {
