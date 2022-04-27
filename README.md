@@ -11,4 +11,5 @@
     <li>Firestore</li>
 </ul>
 
-![./imgs/homepage.png]
+![./src/imgs/homepage.png]
+<img src="./src/imgs/feed.png">
