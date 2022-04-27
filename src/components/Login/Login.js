@@ -26,7 +26,7 @@ function Login() {
             email: userAuth.user.email,
             uid: userAuth.user.uid,
             displayName: userAuth.user.displayName,
-            profileUrl: userAuth.user.photoURL
+            photoUrl: userAuth.user.photoURL
           })
         )
       })
@@ -39,6 +39,7 @@ function Login() {
     if (!name) {
       return alert('Please enter full name')
     }
+    console.log(profilePic, name)
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userAuth) => {

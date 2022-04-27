@@ -47,7 +47,7 @@ function Feed() {
 
     try {
       addDoc(collection(db, 'posts'), {
-        name: user.displayName,
+        name: user.displayName || user.email,
         description: user.email,
         message: input,
         photoUrl: user.photoUrl || '',
