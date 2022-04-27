@@ -10,3 +10,5 @@
     <li>Firebase Auth</li>
     <li>Firestore</li>
 </ul>
+
+![./imgs/homepage.png]

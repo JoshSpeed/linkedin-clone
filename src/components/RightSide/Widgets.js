@@ -26,6 +26,12 @@ function Widgets() {
       {newsArticle('War in Ukraine', 'Top news - 10000 readers')}
       {newsArticle('Crazy petrol prices', 'Top news - 2513 readers')}
       {newsArticle("I can't afford to heat my home", 'Top news - 2146 readers')}
+      {newsArticle(
+        "It's going to be a dry British Summer",
+        'Fake news - 1146 readers'
+      )}
+      {newsArticle('Elon Musk buys Twitter', 'Top news - 2134 readers')}
+      {newsArticle("I don't know what else to write", 'Top news - 1 reader')}
     </div>
   )
 }
